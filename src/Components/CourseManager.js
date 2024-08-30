@@ -20,6 +20,7 @@ function CourseManager() {
         fetchCourses();
     }, []);
 
+    //Get Course
     const fetchCourses = () => {
         axios.get(`${BaseURL}/api/courses`)
             .then(response => {
@@ -29,7 +30,7 @@ function CourseManager() {
             .catch(error => console.error('Error fetching courses:', error));
     };
 
-
+    //Get Instance
     const fetchInstances = () => {
         if (year && semester) {
             axios.get(`${BaseURL}/api/instances/${year}/${semester}`)
@@ -40,6 +41,8 @@ function CourseManager() {
                 .catch(error => console.error('Error fetching instances:', error));
         }
     };
+
+    //Add Course
     const handleAddCourse = (event) => {
         event.preventDefault();
         const { title, code, description } = event.target.elements;
@@ -80,28 +83,7 @@ function CourseManager() {
             });
     };
 
-
-    const handleAddInstance = (event, courseId, year, semester) => {
-        event.preventDefault(); // Prevent default form submission behavior
-
-        // Ensure all required values are provided
-        if (!courseId || !year || !semester) {
-            toast.error('Please fill in all fields.');
-            return;
-        }
-
-        axios.post(`${BaseURL}/api/instances`, {
-            courseId: courseId,
-            year: year,
-            semester: semester
-        })
-            .then(response => {
-                toast.success('Course Instance Created Successfully');
-            })
-            .catch(error => toast.error('An error occurred while adding the instance. Please try again.'));
-    };
-
-
+    //Delete Course
     const handleDeleteCourse = (courseId) => {
         axios.delete(`${BaseURL}/api/courses/${courseId}`)
             .then(() => {
@@ -111,9 +93,7 @@ function CourseManager() {
             .catch(error => toast.error('An error occurred while deleting the course. Please try again.'));
     };
 
-
-
-
+    //Show Course
     const handleShowModal = (courseId, callback) => {
         axios.get(`${BaseURL}/api/courses/${courseId}`)
             .then(response => {
@@ -129,7 +109,27 @@ function CourseManager() {
             .catch(error => console.error('Error fetching course details:', error));
     };
 
+     //Add Instance
+     const handleAddInstance = (event, courseId, year, semester) => {
+        event.preventDefault(); // Prevent default form submission behavior
 
+        // Ensure all required values are provided
+        if (!courseId || !year || !semester) {
+            toast.error('Please fill in all fields.');
+            return;
+        }
+        axios.post(`${BaseURL}/api/instances`, {
+            courseId: courseId,
+            year: year,
+            semester: semester
+        })
+            .then(response => {
+                toast.success('Course Instance Created Successfully');
+            })
+            .catch(error => toast.error('An error occurred while adding the instance. Please try again.'));
+    };
+
+    //Delete Instance
     const handleDeleteInstance = (instanceId, year, semester, courseId) => {
         axios.delete(`${BaseURL}/api/instances/${year}/${semester}/${courseId}`)
             .then(() => {
@@ -143,15 +143,8 @@ function CourseManager() {
                 toast.error('An error occurred while deleting the instance. Please try again.');
             });
     };
-    
 
-    // const handleShowInstanceListModal = (courseId, callback) => {
-    //     axios.get(`${BaseURL}/api/instances/${year}/${semester}/${courseId}`)
-    //         .then(response => callback(response.data.data))
-    //         .catch(error => console.error('Error fetching instance details:', error));
-    // };
-
-
+    //Show Instance
     const handleShowInstanceListModal = (instanceId, callback) => {
         axios.get(`${BaseURL}/api/instances/${instanceId}`)
             .then(response => {
@@ -164,10 +157,8 @@ function CourseManager() {
             })
             .catch(error => console.error('Error fetching instance details:', error));
     };
-    
-    
 
-
+    //Refresh Course
     const refreshCourses = () => {
         fetchCourses();
         console.log('Courses refreshed!');
@@ -218,7 +209,7 @@ function CourseManager() {
                             fetchInstances={fetchInstances}
                             handleDeleteInstance={handleDeleteInstance}
                             handleShowInstanceListModal={handleShowInstanceListModal}
-                            />
+                        />
                     </div>
                 </Col>
             </Row>
