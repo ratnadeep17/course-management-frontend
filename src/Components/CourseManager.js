@@ -25,7 +25,7 @@ function CourseManager() {
         axios.get(`${BaseURL}/api/courses`)
             .then(response => {
                 const { data } = response.data; // Extract courses from the data field
-                setCourses(data); // Update the state with the courses list
+                setCourses(data || []); // Update the state with the courses list
             })
             .catch(error => console.error('Error fetching courses:', error));
     };
