@@ -152,8 +152,8 @@ function CourseManager() {
     // };
 
 
-    const handleShowInstanceListModal = (courseId, callback) => {
-        axios.get(`${BaseURL}/api/instances/${year}/${semester}/${courseId}`)
+    const handleShowInstanceListModal = (instanceId, callback) => {
+        axios.get(`${BaseURL}/api/instances/${instanceId}`)
             .then(response => {
                 const { data, statusMessage } = response.data;
                 if (response.data.statusCode === 200) {
@@ -164,6 +164,7 @@ function CourseManager() {
             })
             .catch(error => console.error('Error fetching instance details:', error));
     };
+    
     
 
 

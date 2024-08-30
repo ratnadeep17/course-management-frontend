@@ -44,12 +44,13 @@ function AddInstanceForm({ handleSubmit, courses, refreshCourses }) {
       >
         <Row className="align-items-end">
           <Col xs={10}>
-            <Form.Group>
-              <Form.Control 
+            {/* <Form.Group> */}
+              <Form.Select 
                 as="select" 
                 value={selectedCourseId} 
                 onChange={handleCourseChange} 
                 required
+                style={{ border: 'none', outline: 'none' }}
               >
                 <option value="">Select course</option>
                 {courses.map(course => (
@@ -57,8 +58,8 @@ function AddInstanceForm({ handleSubmit, courses, refreshCourses }) {
                     {course.title}
                   </option>
                 ))}
-              </Form.Control>
-            </Form.Group>
+              </Form.Select>
+            {/* </Form.Group> */}
           </Col>
           <Col xs={2}>
             <Button variant="primary" onClick={handleRefresh}>
